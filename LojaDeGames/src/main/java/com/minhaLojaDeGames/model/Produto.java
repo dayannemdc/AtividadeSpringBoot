@@ -1,17 +1,16 @@
 package com.minhaLojaDeGames.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+//import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
+@Table (name = "tb_produto")
 public class Produto {
 
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long idProduto;
@@ -20,9 +19,8 @@ public class Produto {
 	private @NotBlank double preco;
 	
 	@ManyToOne
-	@JoinColumn(name = "categoria_id")
+	//@JoinColumn(name = "categoria_id")
 	public Categoria categoriaRelacionada;
-	public List<Produto> produto = new ArrayList<>();
 	
 	public Long getIdProduto() {
 		return idProduto;
@@ -48,6 +46,11 @@ public class Produto {
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
-	
-	
+	public Categoria getCategoriaRelacionada() {
+		return categoriaRelacionada;
+	}
+	public void setCategoriaRelacionada(Categoria categoriaRelacionada) {
+		this.categoriaRelacionada = categoriaRelacionada;
+	}
+		
 }

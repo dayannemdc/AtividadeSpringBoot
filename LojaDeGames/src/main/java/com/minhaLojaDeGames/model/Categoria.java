@@ -9,16 +9,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
+@Table(name = "tb_categoria")
 public class Categoria {
 
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long idCategoria;
 	private @NotBlank String tipo;
 	
 	@OneToMany(mappedBy = "categoriaRelacionada", cascade = CascadeType.REMOVE)
-	private List<Categoria> categoria = new ArrayList<>();
+	private List<Produto> produtos = new ArrayList<>();
 	
 	public Long getIdCategoria() {
 		return idCategoria;
@@ -32,6 +34,13 @@ public class Categoria {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+	
 	
 	
 }

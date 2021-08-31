@@ -10,5 +10,5 @@ import com.minhaLojaDeGames.model.Categoria;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long>{
 
-	List<Categoria> findAllByNomeContainingIgnoreCase(String tipo);
+	List<Categoria> findAllByTipoContainingIgnoreCase(String tipo);
 }

@@ -26,8 +26,8 @@ public class CategoriaController {
 	private @Autowired CategoriaRepository repository;
 
 	@GetMapping("/todas")
-	public List<Categoria> findAllCategoria() {
-		return repository.findAll();
+	public ResponseEntity< List<Categoria>> findAllCategoria() {
+		return ResponseEntity.ok(repository.findAll());
 	}
 
 	@GetMapping("/{id_categoria}")
@@ -43,7 +43,7 @@ public class CategoriaController {
 
 	@GetMapping("/tipo/{descrição}")
 	public ResponseEntity<List<Categoria>> findByDescricaoCategoria(@PathVariable(value = "descrição") String tipo) {
-		List<Categoria> objetoCategoria = repository.findAllByNomeContainingIgnoreCase(tipo);
+		List<Categoria> objetoCategoria = repository.findAllByTipoContainingIgnoreCase(tipo);
 		if (objetoCategoria.isEmpty()) {
 			return ResponseEntity.status(204).build();
 		} else {
