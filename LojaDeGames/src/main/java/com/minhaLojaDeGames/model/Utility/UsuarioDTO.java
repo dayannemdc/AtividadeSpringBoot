@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 public class UsuarioDTO {
 
 	private @NotBlank @Email String email;
-	private @NotBlank @Email String senha;
+	private @NotBlank String senha;
 
 	private Long id;
 	private String nome;
