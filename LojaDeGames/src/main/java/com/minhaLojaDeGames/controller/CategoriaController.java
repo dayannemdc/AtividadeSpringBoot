@@ -18,21 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.minhaLojaDeGames.model.Categoria;
 import com.minhaLojaDeGames.repository.CategoriaRepository;
+import com.minhaLojaDeGames.service.CategoriaService;
 
 @RestController
 @RequestMapping("/categoria")
 public class CategoriaController {
 
 	private @Autowired CategoriaRepository repository;
+	private @Autowired CategoriaService service;
 
 	@GetMapping("/todas")
-	public ResponseEntity< List<Categoria>> findAllCategoria() {
+	public ResponseEntity<List<Categoria>> findAllCategoria() {
 		return ResponseEntity.ok(repository.findAll());
 	}
 
 	@GetMapping("/{id_categoria}")
-	public ResponseEntity<Categoria> buscarfindByIDCategoria(
-			@PathVariable(value = "id_categoria") Long idCategoria) {
+	public ResponseEntity<Categoria> buscarfindByIDCategoria(@PathVariable(value = "id_categoria") Long idCategoria) {
 		Optional<Categoria> objetoCategoria = repository.findById(idCategoria);
 		if (objetoCategoria.isPresent()) {
 			return ResponseEntity.status(200).body(objetoCategoria.get());
@@ -55,14 +56,26 @@ public class CategoriaController {
 	public ResponseEntity<Categoria> postCategoria(@Valid @RequestBody Categoria novaCategoria) {
 		return ResponseEntity.status(201).body(repository.save(novaCategoria));
 	}
-	
+
 	@PutMapping("/put")
 	public ResponseEntity<Categoria> putCategoria(@Valid @RequestBody Categoria categoriaParaAtualizar) {
-		return ResponseEntity.status(201).body(repository.save(categoriaParaAtualizar));
+		Optional<?> objetoCategoria = service.atualizarCategoria(categoriaParaAtualizar);
+		if (objetoCategoria.isEmpty()) {
+			return ResponseEntity.status(400).build();
+		} else {
+			return ResponseEntity.status(201).body(repository.save(categoriaParaAtualizar));
+		}
 	}
 
 	@DeleteMapping("/delete/{id_categoria}")
-	public void deleteCategoria(@PathVariable(value = "id_categoria") Long idCategoria) {
-		repository.deleteById(idCategoria);
+	public ResponseEntity<Categoria> deleteCategoria(@PathVariable(value = "id_categoria") Long idCategoria) {
+		Optional<Categoria> objetoCategoria = repository.findById(idCategoria);
+		if (objetoCategoria.isPresent()) {
+			repository.deleteById(idCategoria);
+			return ResponseEntity.status(200).build();
+		} else {
+			return ResponseEntity.status(400).build();
+		}
+
 	}
 }
