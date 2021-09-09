@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.minhaLojaDeGames.model.Usuario;
+
 public class UserDetailsImplements implements UserDetails{
 
 	/**
@@ -17,6 +19,11 @@ public class UserDetailsImplements implements UserDetails{
 	private String senha;
 	private List<GrantedAuthority> autorizacoes;
 	
+	public UserDetailsImplements(Usuario usuario) {
+		this.email = usuario.getEmail();
+		this.senha = usuario.getSenha();
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
